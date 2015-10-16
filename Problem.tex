@@ -1,0 +1,18 @@
+We wish to optimize efficiency subject to the constraint that the solution satisfies some minimal robustness criteria.  As robustness is typically related to concerns of safety, we'd like to enforce our robustness as a hard constraint.
+Specifically, let us consider a control problem on a metric space $X$.
+We will assume that there are a range of feasible periodic orbits $\{ \Gamma_{\alpha} \}_{\alpha \in A}$ with respect to some indexing set $A$
+which we wish to optimize over.
+That is to say each $\Gamma_{\alpha} \in C^{0}( S^{1} ; X)$.
+A measure of efficiency on periodic trajectories, $\mathcal{E}: C^{0}( S^{1} ; X) \to \mathbb{R}$ then induces a function $E:A\to \mathbb{R}$ given by
+\begin{align*}
+	E( \alpha) := \mathcal{E}( \Gamma_{\alpha}).
+\end{align*}
+
+Given $r > 0$ we will say that the trajectory $\Gamma_{\alpha}$ is \emph{ $r$-robust} if $N_{r}(\Gamma_{\alpha}) \subset \BRS(\Gamma_{\alpha})$.
+
+We seek to solve the following optimization problem for $r > 0$.
+\begin{align*}
+	p^{*} = \sup_{\alpha} E(\alpha) \\
+\intertext{subject to the constraint}
+	N_{r}(\Gamma_{\alpha}) \subset \BRS(\Gamma_{\alpha})
+\end{align*}
