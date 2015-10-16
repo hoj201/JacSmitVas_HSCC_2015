@@ -1,0 +1,85 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{dsfont}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\supp}{\text{spt}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\N}{\mathbb{N}}
+% \newcommand{\proof}{\noindent{\bf Proof: }}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Luj}{\mathcal{L}_{u_j}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\vect}{\text{vec}}
+
+
+\title{Preliminary Results on Efficient, Robust Limit Cycle Synthesis}
+\author{Henry O. Jacobs, Nils Smit-Anseeuw and Ram Vasudevan}
+\date{September 17, 2015}
+
+\begin{document}
+\maketitle
+
+Define $P$ as:
+\begin{flalign} 
+	% \label{eq:primal lp}
+			& & \text{sup} \hspace*{1cm} & \int_{X \times A} E(\alpha) d\mu_T && \hspace*{-1.75cm}(P) \nonumber \\
+			& & \text{s.t.} \hspace*{1cm} & \LL'\mu =
+                        \delta_T \otimes \mu_T - \delta_0 \otimes
+                        \mu_0, \nonumber \\
+			& & & \mu_0 =  \hat{\mu}_0  + \int_X d\mu_T \otimes \mathds{1}_{R}(x) \lambda,&& \nonumber \\
+			& & & \int_{X \times A} d\mu_T =  1,&& \nonumber \\
+			& & & \mu, \mu_0, \mu_T, \hat{\mu}_0 \geq 0 \nonumber
+\end{flalign}
+where the given data are $f,X,A,X_T,A_T$ and the supremum is taken
+over a tuple of measures $(\mu,\mu_0,\hat{\mu}_0,\mu_T) \in \Large(\M\big([0,T] \times X \times A\big) \times \M(X \times A)$ $\times \M(X \times A) \times \M(X_T\times A_T)\Large)$.  Define the dual program to $P$ denoted $D$ as:
+\begin{flalign} 
+% \label{eq:dual lp}
+		& & \text{inf} \hspace*{1cm} & p && (D) \nonumber \\
+		& & \text{s.t.} \hspace*{1cm} & w(x,\alpha) \leq 0 && \forall (x,\alpha) \in X \times A, \nonumber\\
+		& & & \LL v(t,x,\alpha) \leq 0  && \forall (t,x,\alpha) \in [0,T] \times X \times A, \nonumber \\
+       		& & & w(x,\alpha) - v(0,x,\alpha) \geq 0 && \forall(x,\alpha) \in X \times A, \nonumber \\
+		& & & p + v(T,x,\alpha) - \int_{X} w(\tilde{x},\alpha) \mathds{1}_{R}(\tilde{x},\alpha) d\lambda(\tilde{x}) - E(\alpha) \geq 0  & & \forall(x,\alpha) \in X_T \times A_T \nonumber
+%%		& & & \Lf v(t,x) + \boldsymbol{1}^T p(t,x) + \boldsymbol{1}^T q(t,x) \leq 0, \forall (t,x) \in [0,T] \times X \\
+%%		& & & [p(t,x) - q(t,x)]^T = \Lg v(t,x), \forall (t,x) \in [0,T] \times X \\ 
+%%                & & & p(t,x), q(t,x) \geq 0, \forall (t,x) \in [0,T] \times X.
+\end{flalign}
+where the given data are $f,X,A,X_T,A_T$ and the infimum is taken over $(v,w,p) \in (C^1\left([0,T] \times X \times A \right) \times C(X \times A) \times \R) $. 
+
+\begin{thm}
+If either $P$ or $D$ is feasible, then both are feasible and have the same value.
+\end{thm}
+
+\begin{thm}
+If P is feasible, then the marginal of the solution $\mu_T$ in the $A$-coordinate is a Dirac delta.
+\end{thm}
+
+\begin{thm}
+Suppose $(v,w,p)$ are solutions to $D$ and $\alpha_T$ is the location of the Dirac delta for the $\mu_T$ that solves $P$, then $w(\cdot, \cdot) \geq \int_{X} w(\tilde{x},\alpha_T) \mathds{1}_{R}(\tilde{x},\alpha) d\lambda(\tilde{x})$ on the backwards reachable set to the limit cycle at $\alpha_T$.
+\end{thm}
+\begin{proof}
+Suppose $x: [0,T] \to X \times A$ is a solution to the ODE, beginning at $x_0\times \alpha_0\in X \times A$, and $x(T)  =( x_T \times \alpha_T ) \in X_T \times A_T$, then:
+\begin{equation}
+v(T,x_T,\alpha_T) \leq v(0,x_0,\alpha_0)  \leq w(x_0,\alpha_0).
+\end{equation}
+Notice also that $p = E(\alpha_T)$.The desired result follows immediately.
+\end{proof}
+
+\begin{thm}
+Suppose $(v,w,p)$ are solutions to $D$ and $\alpha_T$ is the location of the Dirac delta for the $\mu_T$ that solves $P$, then $w(x,\alpha_T) \geq \int_{X} w(\tilde{x},\alpha_T) \mathds{1}_{R}(\tilde{x},\alpha) d\lambda(\tilde{x})$ for almost every $x \in \{ x \in X | \mathds{1}_R(x,\alpha_T)  = 1\}$.
+\end{thm}
+\begin{proof}
+This follows from straightforward measure theory arguments given that $w \leq 0$.
+\end{proof}
+
+\end{document}

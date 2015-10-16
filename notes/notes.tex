@@ -1,0 +1,213 @@
+
+\documentclass[12pt]{amsart}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{todonotes}
+\geometry{a4paper} % or letter or a5paper or ... etc
+% \geometry{landscape} % rotated page geometry
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\argsup}{argsup}
+\DeclareMathOperator{\btrs}{btrs}
+
+
+% See the ``Article customise'' template for come common customisations
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+
+\title{A careful examination of our balls}
+\author{}
+\date{} % delete this line to display the current date
+
+%%% BEGIN DOCUMENT
+\begin{document}
+
+\maketitle
+
+\section{Some important sets}
+\label{sec:sets}
+Consider a control system on some analytic domain $X = \{ x \in \mathbb{R}^n \mid g_X(x) \leq 0 \}$ for some $g_X \in \mathbb{R}[x_1,\dots,x_n]$
+with polynomial dynamics
+\begin{align*}
+	\dot{x} = f(x , u). 
+\end{align*}
+Moreover, assume we have a family of polynomial control laws $u = g_{\alpha}(x)$ indexed by a set $A$ with the parameter $\alpha \in A$.
+For each fixed $\alpha$ assume there is an attracting set $X_\alpha \subset X$ given by the dynamics.
+For example, this attractor could represent a neighborhood of a locomotive gait.
+We can then consider the set
+\begin{align*}
+	Y_T = \{ (x,\alpha)  \mid \alpha \in A, x \in N_\varepsilon(X_{\alpha } ) \}.
+\end{align*}
+for some small $\varepsilon > 0$.
+\todo[inline]{The use of $T$ here is not yet warranted for the reader.}
+We can switch $\alpha$ at any time.  This effectively yields the new control systems
+\begin{align}
+	\dot{x} = f(x , g_\alpha(x) ) \label{eq:new_control}
+\end{align}
+where $\alpha \in A$ is the new control parameter.
+
+To simplify dynamical concerns we will consider only this later control system.
+We are concerned with the robustness of the sets $X_\alpha$ under these dynamics.
+In order to address this, let us denote the backward-time reachable set of $X_\alpha$ under \eqref{eq:new_control} by $\btrs(X_\alpha)$.
+To asses robustness of $X_\alpha$ we consider the neighborhood $N_r( X_\alpha)$ for some $r > 0$.
+We then say that $X_\alpha$ is a \emph{robust attractor of radius $r$} if $\btrs(X_\alpha)$ contains $N_r(X_\alpha)$.
+
+Let us choose some $r > \varepsilon > 0$ and assemble the set
+\begin{align*}
+	R = \{ (x,\alpha) \mid \alpha \in A , x \in N_r( X_\alpha) \}.
+\end{align*}
+
+
+\section{The primal}
+Let us consider the primal optimization problem
+\begin{align}
+	p^* = \sup \int E(\alpha) d\mu_T(x,\alpha)  \label{eq:primal}
+\end{align}
+with decision variables
+\begin{align*}
+	\mu_0,\hat{\mu}_0,\mu_T \in \mathcal{D}'(X \times A) \text{, and } \mu \in \mathcal{D}'( [0,T] \times X \times A)
+\end{align*}
+subject to the constraints
+\begin{align}
+	&\mu_T \otimes \delta_T - \mu_0 \otimes \delta_0 - \mathcal{L}' \mu = 0 \tag{\ref{eq:primal}a} \label{LE constraint} \\
+	&\mu_0 = \hat{\mu}_0 + \frac{ \mathds{1}_R}{ \vol(X) } \left( \int_X d\mu_T (x) \right) \lambda_X \tag{\ref{eq:primal}b} \label{robustness constraint} \\
+	&\int_{X\times A} \mu_T = 1 \tag{\ref{eq:primal}c} \label{normalization constraint}\\
+	&\mu_T, \mu_0 , \hat{\mu}_0 , \mu \geq 0 \tag{\ref{eq:primal}d} \label{positivity constraint} \\
+	&\supp( \mu_T) \subset Y_T . \label{support constraint} \tag{\ref{eq:primal}e} 
+\end{align}
+Here $\lambda_X \in \mathcal{D}'( X)$ denotes the Lebesgue measure on $X$.
+
+\begin{prop} \label{prop:mu_0}
+	Let $(\mu_0,\hat{\mu}_0,\mu_T,\mu)$ solve \eqref{eq:primal}.
+	Then $\supp(\mu_0) \subset \btrs(Y_T)$.
+\end{prop}
+\begin{proof}
+	\todo[inline]{pending, but thanks to Henrion-Korda}
+\end{proof}
+
+\begin{thm} \label{thm:Dirac}
+If $(\mu_0,\hat{\mu}_0,\mu_T,\mu)$ solves \eqref{eq:primal} then $\int_X d\mu_T(x,\alpha) = \delta_{\alpha_T}(\alpha)$  where $\alpha_T = \operatorname{argsup}_\alpha E(\alpha)$ and $\delta_{\alpha_T} \in \mathcal{D}'(A)$ is the Dirac-delta distribution centered at $\alpha_T$.
+\end{thm}
+\begin{proof}
+	We will illustrated this by way of contradiction.
+	Let $(\mu_0,\hat{\mu}_0,\mu_T,\mu)$ be a solution to \eqref{eq:primal}
+	and assume the marginal $\sigma (\alpha) = \int_X d\mu_T(x,\alpha)$ has support at  $\alpha_T $ and on some other set $\tilde{A} \subset A$ which does not contain $\alpha_T$.
+	Finally assume $E(\alpha_T) > E( \tilde{\alpha} )$ for all $\tilde{\alpha} \in \tilde{A}$.
+	For any $\epsilon > 0$ we can consider the distribution $\mu_T^\epsilon$ defined by
+	\begin{align*}
+		\mu^\varepsilon_T (S) = \frac{\mu_T( S \cap N_\epsilon(X \times \{ \alpha_T\} ) }{ \mu_T( N_\epsilon( X \times \{ \alpha_T\} ) ) }
+	\end{align*}
+	for any measurable $S \subset X \times A$.
+	We observe that $\mu_T^\varepsilon$ satisfies \eqref{normalization constraint} through \eqref{support constraint}
+	and that the cost function achieves a greater value than that with $\mu_T$.
+	We need to show that there exists a $\mu^\varepsilon,\mu_0^\varepsilon$, and $\hat{\mu}_0^\varepsilon$
+	which achieves constraints $\eqref{LE constraint} and $\eqref{robustness constraint} when $\mu_T$ is replaced with $\mu_T^\varepsilon$.
+	The Louiville constraint \eqref{LE constraint} determines $\mu_0^\varepsilon$ uniquely and implies that the support of $\mu_0^\varepsilon$ is contained within the support of $\mu_0$
+	since this is the case for $\mu_T^\varepsilon$ with respect to $\mu_T$.
+	By viewing $\hat{\mu}_0$ as a slack variable, \eqref{robustness constraint} becomes a linear inequality in $\mu_0$ and $\mu_T$.
+	As $\mu_0^\varepsilon$ and $\mu_T^\varepsilon$ are obtained by restricting the supports of $\mu_0$ and $\mu_T$ and then rescaling appropriately, substitution of $\mu_0$ with $\mu_0^\varepsilon$ and $\mu_T$ with $\mu_T^\varepsilon$
+	into \eqref{robustness constraint} still yields a true statement.  Thus $\mu_T^\varepsilon$ is a strictly better solution to $\mu_T$ and we obtain a contration.
+\end{proof}
+
+\todo[inline]{I think that this theorem/proof is flawed, and this is not counting tiny technical oversights.
+I think we are missing assumptions. We have assumed that $E(\alpha)$ has a unique maxima on the subset $A_{feas} \subset A$ given by
+$
+	A_{feas} = \{ \alpha \in A \mid \exists \mu_0,\dots,\mu \text{ which satisfy the constraints and have support at $\alpha$} \}.
+$
+We have to assume $E$ is convex and $A_{feas}$ is convex, or something.
+Alternatively, perhaps we could drop the assumption that $E$ has a unique maximum and see how that goes.
+I think this later idea is more promising.
+}
+%\begin{cor} \label{cor:Dirac}
+%	If $\mu_0,\hat{\mu}_0,\mu_T,\mu$ solves \eqref{eq:primal} then $\mu_T = \nu \otimes \delta_{\alpha_T}$ for some probability distribution $\nu \in \mathcal{D}'(X)$ with $\alpha_T = \operatorname{argsup}_{\alpha}(E(\alpha))$.
+%\end{cor}
+
+\section{The dual problem}
+The (pre)dual problem to \eqref{eq:primal} is given by
+\begin{align}
+	\inf_{p \in \mathbb{R}} p  \label{eq:dual}
+\end{align}
+with respect to the decision variables
+\begin{align*}
+	p  \in \mathbb{R} , w \in \mathcal{D}(X \times A), \text{ and } v \in \mathcal{D}( [0,T] \times X \times A )
+\end{align*}
+and the constraints
+\begin{align}
+	&w \leq 0 \tag{ \ref{eq:dual} a} \label{w<0}  \\
+	&\mathcal{L} v \leq 0  \tag{ \ref{eq:dual} b} \label{eq:Lyapunov} \\
+	&w(x,\alpha) - v(0,x,\alpha) \geq 0   \tag{ \ref{eq:dual} c}  \label{eq:w>v_0} \\
+	&v(T,x,\alpha) - \frac{1}{ \vol(X) } \left( \int_X \mathds{1}_R(\tilde{x},\alpha) w(\tilde{x},\alpha) d \lambda(x) \right)
+		+ p - E(\alpha) \geq 0 \quad \forall (x,\alpha) \in Y_T.  \tag{ \ref{eq:dual} d}  \label{eq:funky}
+\end{align}
+
+\begin{prop} \label{prop:no gap}
+	Assuming either \eqref{eq:primal} or \eqref{eq:dual} are feasible, than both are feasible and there is no duality gap between \eqref{eq:primal} and \eqref{eq:dual}.
+\end{prop}
+\begin{proof}
+	These optimizations are convex.
+\end{proof}
+
+Given a solution $(v,w,p)$ of \eqref{eq:dual} we may consider the inequality
+\begin{align}
+	w \geq \frac{1}{\vol(X)} \int_{X} w(\tilde{x},\alpha_T) \mathds{1}_{R}(\tilde{x},\alpha_T) d\lambda(\tilde{x}) \label{eq:outer}
+\end{align}
+and define the subset
+\begin{align}
+	Y_0 = \{ (x,\alpha) \in X \times A \mid  \text{$x$ satisfies \eqref{eq:outer} } \}. \label{eq:X_0}
+\end{align}
+where $\alpha_T \in A$ is the location of the Dirac delta distribution in \eqref{cor:Dirac}.
+
+\begin{thm} \label{thm:outer}
+  The set  $\btrs ( Y_T )  \subset Y_0$.
+\end{thm}
+\begin{proof}
+Assume $(x_0,\alpha_0)$ is in the region of attraction to $Y_T$
+and suppose $(x_T,\alpha_T) \in Y_T$ and $x: [0,T] \to X$ is a solution to the ordinary differential equation
+\begin{align}
+	\dot{x} = f(x,\alpha) \label{eq:ds}
+\end{align}
+for some $\alpha(t)$ with final condition $x(T) = x_T$ and $\alpha(T) = \alpha_T$ and initial condition $x_0 = x(0), \alpha_0 = \alpha(0)$.
+Given a solution $(v,w,p)$ of \eqref{eq:dual} we observe that $v$ is a Lyapunov function for the dynamical system \eqref{eq:ds}
+by equation \eqref{eq:Lyapunov}.
+Thus by the definition of a Lyapunov function combined with the inequality \eqref{eq:w>v_0} we observe
+\begin{equation*}
+v(T,x_T,\alpha_T) \leq v(0,x(0),\alpha(0))  \leq w(x(0),\alpha(0)).
+\end{equation*}
+Substitution of this inequality into \eqref{eq:funky} yields
+\begin{align*}
+w(x(0),\alpha(0)) \geq \frac{1}{ \vol(X) } \left( \int_X \mathds{1}_R(\tilde{x},\alpha_T) w(\tilde{x},\alpha_T) d \lambda(x) \right)
+		- p +E(\alpha_T).
+\end{align*}
+for any $(x_T,\alpha_T) \in Y_T$.
+Moreover, by Proposition \ref{prop:no gap} we have $p = E(\alpha_T)$.
+Thus $x_0$ satisfies $\eqref{eq:outer}$ and so $(x_0,\alpha_0) \in X_0$.
+\end{proof}
+
+%\begin{thm} \label{gar!}
+%Suppose $(v,w,p)$ are solutions to $D$ and $\alpha_T$ is the location of the Dirac delta for the $\mu_T$ that solves $P$, then $w(x,\alpha_T) \geq \frac{1}{\vol(X)} \int_{X} w(\tilde{x},\alpha_T) \mathds{1}_{R}(\tilde{x},\alpha_T) d\lambda(\tilde{x})$ for almost every $x \in \{ x \in X | \mathds{1}_R(x,\alpha_T)  = 1\}$.
+%\end{thm}
+%\begin{proof}
+%This follows from straightforward measure theory arguments given that $w \leq 0$.
+%\end{proof}
+%
+%\todo[inline]{Not sure we can prove this.  If $R = X$ this seems impossible.  Perhaps the following is possible though.}
+%
+\begin{thm} \label{thm:robustness}
+	The set $R \cap ( X \times \{ \alpha_T \}) \subset \btrs(Y_T)$ where $\alpha_T = \operatorname{argsup}_\alpha E(\alpha)$.
+\end{thm}
+\begin{proof}
+	Let $(\mu_0,\hat{\mu}_0,\mu_T,\mu)$ solve \eqref{eq:primal}.  Constraint \eqref{robustness constraint} implies that $R \cap (X \times \pi_2(\supp(\mu_T)) ) \subset \supp(\mu_0)$.
+	By Theorem \ref{thm:Dirac} $\pi_2( \supp(\mu_T) ) = \{ \alpha_T \}$.	Thus $R \cap (X \times \{\alpha_T\} ) \subset \supp(\mu_0)$.
+	By Proposition \ref{prop:mu_0} the theorem folllows.
+\end{proof}
+
+\begin{cor}
+	$R \cap(X \times \{\alpha_T \}) \subset Y_0$.
+\end{cor}
+\begin{proof}
+	By Theorem \ref{thm:robustness} we know that $R \cap(X \times \{\alpha_T \})$ is contained within the backwards time reachable set to $Y_T$
+	which in turn is contained within $Y_0$ by Theorem \ref{thm:outer}.
+\end{proof}
+
+\end{document}
