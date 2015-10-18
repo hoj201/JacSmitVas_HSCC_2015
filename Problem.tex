@@ -1,4 +1,3 @@
-
 Let us consider a control system, 
 \begin{align}
 	\dot{x} = f(t,x,u), \label{eq:control system}
@@ -26,9 +25,9 @@ A measure of efficiency on periodic trajectories, $\mathcal{E}: C^{0}( S^{1} ; X
 \end{align*}
 We then seek to find the most efficient trajectory $\Gamma_{\alpha}$ subject to the constraint that the corresponding orbit, $\Gamma_{\alpha}(S^{1})$ is robust.
 In summary, we desire to solve the (typically non-convex) optimization problem
-\begin{align*}
-	p^{*} = \sup_{\alpha} E(\alpha) \\
+\begin{align}
+	p^{*} = \sup_{\alpha} E(\alpha) \label{eq:nonconvex}\\
 \intertext{subject to the constraint}
-	N_{r}(\Gamma_{\alpha}) \subset \BRS_{T}(\Gamma_{\alpha}).
-\end{align*}
+	N_{r}(\Gamma_{\alpha}) \subset \BRS_{T}(\Gamma_{\alpha}). \nonumber
+\end{align}
 for some pre-chosen $r >0$ and $T>0$.
