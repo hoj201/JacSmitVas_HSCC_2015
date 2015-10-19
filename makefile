@@ -1,4 +1,4 @@
-JacSmitVas_Oct2015.pdf : JacSmitVas_Oct2015.tex
+JacSmitVas_Oct2015.pdf : JacSmitVas_Oct2015.tex Intro.tex Problem.tex Solution.tex Example.tex
 	pdflatex JacSmitVas_Oct2015.tex
 
 clean : 

@@ -5,21 +5,30 @@ Let us consider a control system,
  for $x$ in some metric space $X$ and $u$ in some convex space $U$.
  In order to discuss robustness for nonlinear control systems we propose the following definition:
 \begin{definition}
-	For a state $x_{f} \in X$, the time-$T$ backwards reachable set is the subset
+    For a state $x_{f} \in X$, the time-$T$ \emph{backwards reachable set} is the subset
 	\begin{align*}
 		\BRS_{T}( x_{f} ) := \{ x_{0} \in X \mid& \exists u(\cdot) , x(\cdot) \text{ such that } \\
 			&\quad \dot{x}(t) = f(t,x(t),u(t)) ,\\
 			&\quad x(0) = x_{0}, x(T) = x_{T}  \}.
 	\end{align*}
 	For a set $\Gamma \subset X$ we define $\BRS_{T}(\Gamma) = \cup_{x \in \Gamma} \BRS_{T}(x)$.
-	Finally, given a radius $r > 0$ we say that $\Gamma$ is $r$-Robust at time $T$ if $N_{r}( \Gamma) \subset \BRS_{T}( \Gamma )$,
+        Given a radius $r > 0$ we say that $\Gamma$ is \emph{$r$-Robust} at time $T$ if $N_{r}( \Gamma) \subset \BRS_{T}( \Gamma )$,
 	where $N_{r}( \cdot)$ refers to the $r$-neighborhood with respect to the metric on $X$.
 \end{definition}
 
-We will assume that there are a range of feasible periodic orbits $\{ \Gamma_{\alpha} \}_{\alpha \in A}$ with respect to some indexing set $A$
+The goal of this paper is to optimize some measure of efficiency subject to a robustness constraint.
+The efficiency of a trajectory $(x(t),u(t))$ is given by a user specified functional, $\mathcal{E}[x(\cdot),u(\cdot)]$.  Given an $r>0$ we could then aim to solve the optimization problem
+\begin{align*}
+    p^* = \sup_{u(\cdot),x(\cdot)} \mathcal{E}[ u(\cdot),x(\cdot) ]
+\end{align*}
+subject to the contraint that $\dot{x} = f(t,x,u)$ and that the orbit $\Gamma = x( [0,T])$ is $r$-robust.
+
+This nonlinear infinite dimensional optimization problem is infeasible for us to solve, and so we consider a more modest problem which we can solve.
+Rather than considering the space of all feasible trajectories,
+we shall restrict ourselves to some finitely parametrizable subset.
+In particular we will assume that there are a range of feasible trajectories $\{ \Gamma_{\alpha} \}_{\alpha \in A}$ with respect to some (tractable) indexing set $A$
 which we wish to optimize over.
-That is to say each $\Gamma_{\alpha} \in C^{0}( S^{1} ; X)$.
-A measure of efficiency on periodic trajectories, $\mathcal{E}: C^{0}( S^{1} ; X) \to \mathbb{R}$ then induces a function $E:A\to \mathbb{R}$ given by
+The efficiency, $\mathcal{E}$, can then be written as a function on $A$ given by
 \begin{align*}
 	E( \alpha) := \mathcal{E}( \Gamma_{\alpha}).
 \end{align*}

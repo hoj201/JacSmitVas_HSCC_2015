@@ -1,4 +1,15 @@
 A reasonable solution to \eqref{eq:nonconvex} could involve convexifying this optimization problem.
 This is the primary aim of this section.  Upon convexifying \eqref{eq:nonconvex} we may solve it using standard numerical convex optimization routines.
+In particular we will consider the optimization problem
+\begin{align*}
+	\sup \int E(\alpha) d\sigma(\alpha)
+\end{align*}
+for a measure $\sigma \in \mathcal{M}(A)$ with respect to the constraints
+\begin{align*}
+	\mu_{0} \otimes \delta_{0} + \mathcal{L}' \mu = \mu_{T} \otimes \delta_{T} \\
+	\int_{A} d\sigma(\alpha) = 1 \\
+	\mu_{0} \geq \int_{A} 1_{R}(x,\alpha) d\sigma(\alpha) \\
+	\operatorname{spt}(\mu_{T}) \subset X_{T} \\
+\end{align*}
 
-To begin, let us introduce the space of measures $\mathcal{M}(X) \equiv C(X)'$ where $C(X)$ is the space of continuous functions.
+{\color{red}  It is not clear that $\sigma$ is really constrained by the $\mu$'s.  Also, the third constraint compares a function and a measure}
